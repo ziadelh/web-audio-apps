@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music Visualizer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js"></script>
+  <script src="https://unpkg.com/meyda@5.6.3/dist/web/meyda.min.js"></script>
+
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      text-align: center;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 16px;
+    }
+    h1 {
+      margin: 8px 0 4px;
+    }
+    .intro {
+      color: #aaa;
+      margin: 0 0 12px;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button {
+      margin: 6px;
+      padding: 10px 18px;
+      font-size: 15px;
+      cursor: pointer;
+      background: #222;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 6px;
+    }
+    button.active {
+      background: #2a6df4;
+      border-color: #2a6df4;
+    }
+    #caption {
+      min-height: 24px;
+      margin: 10px 0;
+      color: #ccc;
+      font-variant-numeric: tabular-nums;
+    }
+    canvas {
+      max-width: 100%;
+      height: auto !important;
+    }
+  </style>
+</head>
+<body>
+  <h1>Music Visualizer</h1>
+  <p class="intro">Each sound is analysed live with Meyda. One audio feature drives one visual property.</p>
+  <div class="buttons">
+    <button onclick="togglePlay(0)">Sound 1 · spectral centroid → colour</button>
+    <button onclick="togglePlay(1)">Sound 2 · RMS → size</button>
+    <button onclick="togglePlay(2)">Sound 3 · zero-crossing rate → border</button>
+  </div>
+  <div id="caption">Choose a sound to start.</div>
+  <div id="canvas-holder"></div>
+  <script src="sketch.js"></script>
+</body>
+</html>

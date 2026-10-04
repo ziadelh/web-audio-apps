@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audio CAPTCHA</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/IDMNYU/p5.js-speech@0.0.3/lib/p5.speech.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    #captcha-box {
+      background: #fff;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      padding: 30px;
+      width: 100%;
+      max-width: 520px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      text-align: center;
+    }
+
+    .intro, .hint {
+      color: #555;
+      font-size: 14px;
+      text-align: center;
+      margin: 0;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #777;
+    }
+
+    .row {
+      margin: 15px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    canvas {
+      border: 1px dashed #444;
+      max-width: 100%;
+      height: auto !important;
+    }
+
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    input {
+      width: 220px;
+      max-width: 100%;
+    }
+
+    #status {
+      font-weight: bold;
+      text-align: center;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div id="captcha-box">
+    <h1>Audio CAPTCHA</h1>
+    <p class="intro">Listen to the three characters and type what you hear. Every play uses a new random pitch, which makes the voice harder for speech-recognition bots to read.</p>
+    <div class="row">
+      <button id="play-btn" title="Play a new code" aria-label="Play a new code">▶️ Play</button>
+      <button id="refresh-btn" title="Replay the same code" aria-label="Replay the same code">🔁 Replay</button>
+    </div>
+    <div class="row">
+      <div id="sketch-holder"></div>
+    </div>
+    <p class="hint">The waveform is drawn from the microphone while the code is spoken. Allowing the microphone is optional.</p>
+    <div class="row">
+      <input type="text" id="answer-box" placeholder="Type the 3 characters" autocomplete="off" />
+      <button id="submit-btn">Submit</button>
+    </div>
+    <div id="status">Press Play to hear the code.</div>
+  </div>
+
+  <script src="sketch.js"></script>
+</body>
+</html>

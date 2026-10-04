@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Audio Apps</title>
+  <meta name="description" content="Four interactive audio apps that run in the browser: effects processor, audio CAPTCHA, music visualizer and voice-controlled visualizer.">
+  <style>
+    :root {
+      --bg: #0f1115;
+      --card: #181b22;
+      --border: #272b35;
+      --text: #e9ebf0;
+      --muted: #9aa1b0;
+      --accent: #4c8dff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.5;
+    }
+    header {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 56px 20px 24px;
+    }
+    h1 { margin: 0 0 10px; font-size: 2.2rem; letter-spacing: -0.02em; }
+    header p { margin: 0; color: var(--muted); max-width: 680px; font-size: 1.05rem; }
+    .grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 12px 20px 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .card img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      border-bottom: 1px solid var(--border);
+      background: #fff;
+    }
+    .body { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
+    h2 { margin: 0 0 6px; font-size: 1.2rem; }
+    .body p { margin: 0 0 14px; color: var(--muted); font-size: 0.95rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .tags span {
+      font-size: 0.75rem;
+      padding: 2px 9px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+    }
+    .actions { margin-top: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+    a.btn {
+      text-decoration: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+    a.primary { background: var(--accent); color: #fff; }
+    a.primary:hover { filter: brightness(1.1); }
+    a.secondary { border: 1px solid var(--border); color: var(--text); }
+    a.secondary:hover { border-color: var(--muted); }
+    .note {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    footer {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px 20px 48px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Web Audio Apps</h1>
+    <p>Four interactive audio apps that run straight in the browser, built with p5.js, p5.sound, p5.speech and Meyda. Nothing to install.</p>
+  </header>
+
+  <main class="grid">
+    <article class="card">
+      <img src="docs/audio-effects-processor.png" alt="Audio effects processor with spectrum display and effect controls">
+      <div class="body">
+        <h2>Audio Effects Processor</h2>
+        <p>A real-time effects chain: low, high or band-pass filter, distortion, delay, compressor and reverb. Compare the original and processed spectrum live, use the microphone as the source, and record the result as a WAV file.</p>
+        <div class="tags"><span>p5.sound</span><span>Web Audio</span><span>FFT</span></div>
+        <div class="actions">
+          <a class="btn primary" href="audio-effects-processor/">Open app</a>
+          <a class="btn secondary" href="https://github.com/ziadelh/web-audio-apps/tree/main/audio-effects-processor">Source</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="docs/audio-captcha.png" alt="Audio CAPTCHA with play, replay and answer box">
+      <div class="body">
+        <h2>Audio CAPTCHA</h2>
+        <p>Speaks a random three-character code at a random pitch so it is harder for speech-recognition bots to read, while a live waveform confirms the sound is playing. Answers like "one two three" and "123" both match.</p>
+        <div class="tags"><span>p5.speech</span><span>Speech synthesis</span><span>Accessibility</span></div>
+        <div class="actions">
+          <a class="btn primary" href="audio-captcha/">Open app</a>
+          <a class="btn secondary" href="https://github.com/ziadelh/web-audio-apps/tree/main/audio-captcha">Source</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="docs/music-visualizer.png" alt="Music visualizer showing a square sized by the sound's loudness">
+      <div class="body">
+        <h2>Music Visualizer</h2>
+        <p>Meyda extracts audio features from three sounds as they play. Spectral centroid drives colour, RMS loudness drives size and zero-crossing rate drives the border, with the live values shown above the canvas.</p>
+        <div class="tags"><span>Meyda</span><span>Audio features</span><span>Generative visuals</span></div>
+        <div class="actions">
+          <a class="btn primary" href="music-visualizer/">Open app</a>
+          <a class="btn secondary" href="https://github.com/ziadelh/web-audio-apps/tree/main/music-visualizer">Source</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="docs/voice-controlled-visualizer.png" alt="Voice-controlled visualizer with a white pentagon on a blue background">
+      <div class="body">
+        <h2>Voice-Controlled Visualizer</h2>
+        <p>Say a colour or a shape and the visual changes while the track plays. The figure pulses with the music's loudness, and the screen shows the words the recogniser heard.</p>
+        <div class="tags"><span>Speech recognition</span><span>Meyda</span><span>p5.js</span></div>
+        <div class="actions">
+          <a class="btn primary" href="voice-controlled-visualizer/">Open app</a>
+          <a class="btn secondary" href="https://github.com/ziadelh/web-audio-apps/tree/main/voice-controlled-visualizer">Source</a>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <p class="note">Best in Chrome or Edge on a desktop. Voice control needs one of them. The browser asks for microphone access in the CAPTCHA (optional), in the effects processor when you pick the microphone, and in the voice-controlled visualizer.</p>
+
+  <footer>
+    By Ziad Elhussein. <a href="https://github.com/ziadelh/web-audio-apps">View the code on GitHub</a>.<br>
+    Music in the voice-controlled visualizer: "Kalte Ohren (Remix)" by Dysfunction_AL (ft. Starfrosch, Kara Square), licensed under
+    <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a> via <a href="http://ccmixter.org/files/destinazione_altrove/59536">ccMixter</a>.
+  </footer>
+</body>
+</html>

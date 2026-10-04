@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Effects Processor</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/addons/p5.sound.min.js"></script>
+</head>
+
+<body>
+  <h1>Audio Effects Processor</h1>
+  <p class="subtitle">A real-time effects chain built with p5.js and p5.sound. Press Play, then move the sliders.</p>
+
+  <div class="controls">
+    <div class="audio-source-group">
+      <label for="audioSourceSelector">Audio Source</label>
+      <select id="audioSourceSelector">
+        <option value="file">Audio File</option>
+        <option value="mic">Microphone (use headphones)</option>
+      </select>
+    </div>
+    <button id="playBtn">Play</button>
+    <button id="pauseBtn">Pause</button>
+    <button id="stopBtn">Stop</button>
+    <button id="skipStartBtn">Skip Start</button>
+    <button id="skipEndBtn">Skip End</button>
+    <button id="loopBtn">Loop</button>
+    <button id="recordBtn">Record</button>
+  </div>
+
+  <div class="card-grid">
+    <div class="card spectrum-card">
+      <h2>Spectrum</h2>
+      <div class="spectrum-flex-row">
+        <div class="spectrum-col">
+          <div id="spectrum-canvas-holder"></div>
+          <div class="spectrum-labels">
+            <span>Original</span>
+            <span>Processed</span>
+          </div>
+        </div>
+        <div class="master-volume-card">
+          <h3>Master Volume</h3>
+          <input type="range" id="masterVolumeSlider" min="0" max="1" step="0.01" value="1" aria-label="Master volume">
+        </div>
+      </div>
+    </div>
+
+    <div class="card filter-section">
+      <h2 id="filterTitle">Low-pass Filter</h2>
+      <label for="filterTypeSelector">Type</label>
+      <select id="filterTypeSelector">
+        <option value="lowpass">Low-pass</option>
+        <option value="highpass">High-pass</option>
+        <option value="bandpass">Band-pass</option>
+      </select>
+      <label for="cutoffSlider">Cutoff Frequency</label>
+      <input type="range" id="cutoffSlider" min="0" max="1" step="0.01" value="0.5">
+      <label for="resonanceSlider">Resonance</label>
+      <input type="range" id="resonanceSlider" min="0" max="1" step="0.01" value="0.5">
+      <label for="dryWetSlider">Dry/Wet</label>
+      <input type="range" id="dryWetSlider" min="0" max="1" step="0.01" value="0.5">
+      <label for="outputSlider">Output Level</label>
+      <input type="range" id="outputSlider" min="0" max="1" step="0.01" value="0.5">
+    </div>
+
+    <div class="card filter-section">
+      <h2>Distortion</h2>
+      <label for="distortionAmountSlider">Amount</label>
+      <input type="range" id="distortionAmountSlider" min="0" max="1" step="0.01" value="0.5">
+      <label for="distortionDryWetSlider">Dry/Wet</label>
+      <input type="range" id="distortionDryWetSlider" min="0" max="1" step="0.01" value="1">
+      <label for="distortionOutputSlider">Output Level</label>
+      <input type="range" id="distortionOutputSlider" min="0" max="2" step="0.01" value="1">
+      <label for="distortionOversampleSlider">Oversample</label>
+      <select id="distortionOversampleSlider">
+        <option value="none">None</option>
+        <option value="2x">2x</option>
+        <option value="4x">4x</option>
+      </select>
+    </div>
+
+    <div class="card filter-section">
+      <h2>Delay</h2>
+      <label for="delayTimeSlider">Delay Time (s)</label>
+      <input type="range" id="delayTimeSlider" min="0.01" max="1" step="0.01" value="0.3">
+      <label for="delayFeedbackSlider">Feedback</label>
+      <input type="range" id="delayFeedbackSlider" min="0" max="0.9" step="0.01" value="0.4">
+      <label for="delayFilterSlider">Echo Filter (Hz)</label>
+      <input type="range" id="delayFilterSlider" min="100" max="10000" step="10" value="2300">
+      <label for="delayDryWetSlider">Dry/Wet</label>
+      <input type="range" id="delayDryWetSlider" min="0" max="1" step="0.01" value="0">
+      <label for="delayOutputSlider">Output Level</label>
+      <input type="range" id="delayOutputSlider" min="0" max="2" step="0.01" value="1">
+    </div>
+
+    <div class="card filter-section">
+      <h2>Compressor</h2>
+      <label for="compressorThresholdSlider">Threshold (dB)</label>
+      <input type="range" id="compressorThresholdSlider" min="-100" max="0" step="1" value="-50">
+      <label for="compressorRatioSlider">Ratio</label>
+      <input type="range" id="compressorRatioSlider" min="1" max="20" step="0.1" value="4">
+      <label for="compressorKneeSlider">Knee</label>
+      <input type="range" id="compressorKneeSlider" min="0" max="40" step="1" value="5">
+      <label for="compressorAttackSlider">Attack (s)</label>
+      <input type="range" id="compressorAttackSlider" min="0" max="1" step="0.01" value="0.1">
+      <label for="compressorReleaseSlider">Release (s)</label>
+      <input type="range" id="compressorReleaseSlider" min="0" max="1" step="0.01" value="0.3">
+      <label for="compressorDryWetSlider">Dry/Wet</label>
+      <input type="range" id="compressorDryWetSlider" min="0" max="1" step="0.01" value="1">
+      <label for="compressorOutputSlider">Output Level</label>
+      <input type="range" id="compressorOutputSlider" min="0" max="2" step="0.01" value="1">
+    </div>
+
+    <div class="card filter-section">
+      <h2>Reverb</h2>
+      <label for="reverbDurationSlider">Duration (s)</label>
+      <input type="range" id="reverbDurationSlider" min="0" max="5" step="0.1" value="2">
+      <label for="reverbDecaySlider">Decay Time (s)</label>
+      <input type="range" id="reverbDecaySlider" min="0" max="5" step="0.1" value="1.5">
+      <label for="reverbDryWetSlider">Dry/Wet</label>
+      <input type="range" id="reverbDryWetSlider" min="0" max="1" step="0.01" value="1">
+      <label for="reverbOutputSlider">Output Level</label>
+      <input type="range" id="reverbOutputSlider" min="0" max="2" step="0.01" value="1">
+      <label for="reverbReverseCheckbox" class="checkbox-label">
+        <input type="checkbox" id="reverbReverseCheckbox"> Reverse Reverb
+      </label>
+    </div>
+
+    <div class="card chain-card">
+      <h2>Signal Chain</h2>
+      <ol class="chain">
+        <li>Audio file or microphone</li>
+        <li>Filter</li>
+        <li>Distortion</li>
+        <li>Delay</li>
+        <li>Compressor</li>
+        <li>Reverb</li>
+        <li>Master volume</li>
+        <li>Speakers and recorder</li>
+      </ol>
+      <p class="note">The delay starts at Dry/Wet 0, so the sound is unchanged until you turn it up. The Output Level sliders share one gain stage: the lowest of them sets the level. With the microphone, wear headphones to avoid feedback.</p>
+    </div>
+  </div>
+
+  <script src="sketch.js"></script>
+</body>
+</html>
