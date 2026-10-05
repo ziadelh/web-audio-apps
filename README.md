@@ -1,6 +1,6 @@
 # Web Audio Apps
 
-Four interactive audio apps that run in the browser, built with **p5.js**, **p5.sound**, **p5.speech** and **Meyda**. No install and no build step.
+Four interactive audio apps that run in the browser, built with **p5.js**, **p5.sound**, **p5.speech** and **Meyda** only. No install and no build step.
 
 **Live demo: [ziadelh.github.io/web-audio-apps](https://ziadelh.github.io/web-audio-apps/)**
 
